@@ -33,5 +33,8 @@
     "email": "Email",
     "newEmail": "e-Mail",
     "clipboard": "Portapapeles"
+  },
+  "forms": {
+    "ruleEditor": "Rule editor"
   }
 }

@@ -68,7 +68,9 @@ const operators = {
     call: (value, params) => value > params.value
   },
   log: {
-    call: (value, params) => console.log(params.name || "<anonymous>", value)
+    call: (value, params) => {
+      return true;
+    }
   }
 };
 

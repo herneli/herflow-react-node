@@ -9,7 +9,7 @@ import moment from "moment";
 import "moment/locale/es";
 import { toggleLanguage } from "./modules/session";
 import Workflow from "./scenes/Workflow";
-
+import Test from "./test";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,9 +30,10 @@ class App extends React.Component {
   render() {
     return (
       <Switch>
-        <Redirect exact path="/" to="/workflow" />
+        <Redirect exact path="/" to="/test" />
         <Route path="/404" component={NotFound} />
         <Route path="/workflow" component={Workflow} />
+        <Route path="/test" component={Test} />
         <AuthorizedRoutes>
           <Switch>
             <Layout />

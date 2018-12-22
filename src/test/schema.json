@@ -1,0 +1,37 @@
+{
+  "title": "Todo",
+  "type": "object",
+  "required": ["title"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Title 2",
+      "default": "A new task"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date"
+    },
+    "done": {
+      "type": "boolean",
+      "title": "Done?",
+      "default": false
+    },
+    "adresses": {
+      "title": "Adresses",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/address"
+      }
+    }
+  },
+  "definitions": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" }
+      }
+    }
+  }
+}
