@@ -18,7 +18,6 @@ class App extends React.Component {
 
   static getDerivedStateFromProps(props, state) {
     if (state.language !== props.language) {
-      console.log(props.language);
       T.setTexts(require("i18n/texts-" + props.language + ".json"));
       moment.locale(props.language);
       return { language: props.language };

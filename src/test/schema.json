@@ -17,7 +17,7 @@
       "title": "Done?",
       "default": false
     },
-    "adresses": {
+    "addresses": {
       "title": "Adresses",
       "type": "array",
       "items": {
