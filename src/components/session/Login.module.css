@@ -1,0 +1,38 @@
+.login-logo {
+  padding-top: 85px;
+  padding-bottom: 70px;
+}
+
+.login-button {
+  font-size: 17px;
+  font-weight: 600;
+  height: 46px;
+  margin-bottom: 70px;
+  background-color: #1786ec;
+  color: white;
+  border: none;
+  padding: 0 12px;
+  border-radius: 3px;
+  text-shadow: 0 0 3px #0000004d;
+  font-family: Roboto;
+}
+
+.login-button:hover {
+  background-color: #1890ff;
+}
+
+.login-button > img {
+  vertical-align: bottom;
+  margin-right: 10px;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.loginBox {
+  background-color: white;
+  width: 650px;
+  margin-top: 140px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}

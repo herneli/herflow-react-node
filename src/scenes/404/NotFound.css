@@ -1,0 +1,11 @@
+.centered {
+    display: flex;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-weight: 300;
+    font-size: 40px;
+    color: #c4c4c4;
+    height: 100vh;
+}

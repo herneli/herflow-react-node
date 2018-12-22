@@ -1,28 +1,62 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { connect } from "react-redux";
+import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+import T from "i18n-react";
+import AuthorizedRoutes from "./components/session/AuthorizedRoutes";
+import NotFound from "./scenes/404/NotFound";
+import Layout from "./scenes/Layout";
+import moment from "moment";
+import "moment/locale/es";
+import { toggleLanguage } from "./modules/session";
+import Workflow from "./scenes/Workflow";
 
-class App extends Component {
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    if (state.language !== props.language) {
+      console.log(props.language);
+      T.setTexts(require("i18n/texts-" + props.language + ".json"));
+      moment.locale(props.language);
+      return { language: props.language };
+    } else {
+      return null;
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Switch>
+        <Redirect exact path="/" to="/workflow" />
+        <Route path="/404" component={NotFound} />
+        <Route path="/workflow" component={Workflow} />
+        <AuthorizedRoutes>
+          <Switch>
+            <Layout />
+            <Redirect path="*" to="/404" />
+          </Switch>
+        </AuthorizedRoutes>
+      </Switch>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  language: state.session.language
+});
+
+const mapDispatchToProps = dispatch => ({
+  onToggleLanguage: () => {
+    dispatch(toggleLanguage());
+  }
+});
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);

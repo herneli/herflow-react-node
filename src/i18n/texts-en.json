@@ -1,0 +1,37 @@
+{
+  "continue": "Continue",
+  "deleting": "Deleting...",
+  "initializing": "Initializing...",
+  "loading": "Loading...",
+  "reasigning": "Reasigning...",
+  "saving": "Saving...",
+  "title": "Compensations",
+  "unexpectedError": "An unexpected error has ocurred",
+  "login": {
+    "loginText": "Login",
+    "googleAuthentication": "Login with Google",
+    "logIn": "Enter",
+    "loggingIn": "Entering...",
+    "user": "User",
+    "password": "Password",
+    "welcomeTo": "Welcome to"
+  },
+  "activity": {
+    "editTitle": "Edit activity",
+    "name": "Name",
+    "task": "Task",
+    "newTask": "New task",
+    "branch": "Parallel",
+    "newBranch": "New parallel",
+    "branchNumber": "Branch {branchNumber}",
+    "loop": "Repeat",
+    "newLoop": "Repeat",
+    "condition": "Condition",
+    "newCondition": "New condition",
+    "conditionTrue": "Yes",
+    "conditionFalse": "No",
+    "email": "Email",
+    "newEmail": "New e-Mail",
+    "clipboard": "Clipboard"
+  }
+}

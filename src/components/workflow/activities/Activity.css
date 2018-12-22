@@ -1,0 +1,138 @@
+.hf-activity {
+  width: 200px;
+  height: 32px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 2px 4px rgba(0, 0, 0, 0.12);
+  margin: 20px;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.hf-activity-icon {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+  width: 32px;
+  height: 32px;
+  margin: 0px;
+  padding: 0px;
+  float: left;
+}
+
+.hf-activity-description {
+  width: 144px;
+  height: 32px;
+  padding: 3px 3px;
+  margin-top: -2px;
+  margin-left: 32px;
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+  position: relative;
+}
+
+.hf-activity-description p {
+  width: 144px;
+}
+
+.hf-activity-status {
+  height: 32px;
+  width: 6px;
+  position: absolute;
+  right: -6px;
+  top: 0px;
+}
+
+.hf-activity-alert {
+  position: absolute;
+  top: 5px;
+  left: -20px;
+  fill: red;
+}
+
+.hf-activity-alert svg {
+  width: 16px;
+}
+
+.hf-activity-menu {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 32px;
+  width: 32px;
+  fill: #aaaaaa;
+  fill-opacity: 0.5;
+}
+
+.hf-activity-menu:hover {
+  fill-opacity: 1;
+}
+
+.hf-activity-menu button {
+  height: 32px;
+  padding: 0px 10px;
+}
+
+.hf-activity-closed {
+  background-color: #009900;
+}
+
+.hf-activity-started {
+  background-color: #ffcc00;
+}
+
+.hf-activity-cancelled {
+  background-color: #cc3300;
+}
+
+.hf-final-point {
+  height: 6px;
+  width: 6px;
+  display: inline-block;
+  position: relative;
+  background-color: #aaaaaa;
+  border-radius: 2px;
+}
+
+.hf-label {
+  background-color: #b1b0b0;
+  color: #ffffff;
+  border-radius: 4px;
+  margin: 0 20px;
+  padding: 3px 2px;
+  font-size: 12px;
+  width: 200px;
+  display: inline-block;
+  z-index: 1;
+}
+
+.hf-no-label {
+  background-color: #b1b0b0;
+  height: 2px;
+  width: 2px;
+  display: inline-block;
+}
+
+.hf-insert {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  position: relative;
+  background: transparent url("../images/plusCircle.png") no-repeat;
+  z-index: 1;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.hf-ellipsis-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hf-ellipsis-2 p {
+  margin: 0;
+}

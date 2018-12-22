@@ -1,0 +1,37 @@
+{
+  "continue": "Continuar",
+  "deleting": "Eliminando...",
+  "initializing": "Inicializando...",
+  "loading": "Cargando...",
+  "reasigning": "Reasignando...",
+  "saving": "Guardando...",
+  "title": "Compensations",
+  "unexpectedError": "Ha ocurrido un error inesperado",
+  "login": {
+    "loginText": "Entrar con la cuenta de Roche",
+    "googleAuthentication": "Acceder con Google",
+    "logIn": "Acceder",
+    "loggingIn": "Accediendo",
+    "user": "Usuario",
+    "password": "Contraseña",
+    "welcomeTo": "Bienvenidos a"
+  },
+  "activity": {
+    "editTitle": "Modificar actividad",
+    "name": "Nombre",
+    "task": "Tarea",
+    "newTask": "Nueva tarea",
+    "branch": "Ejecución paralela",
+    "newBranch": "Nueva ejecución paralela",
+    "branchNumber": "Rama {branchNumber}",
+    "loop": "Repetir",
+    "newLoop": "Repetir",
+    "condition": "Condición",
+    "newCondition": "Condición",
+    "conditionTrue": "Sí",
+    "conditionFalse": "No",
+    "email": "Email",
+    "newEmail": "e-Mail",
+    "clipboard": "Portapapeles"
+  }
+}

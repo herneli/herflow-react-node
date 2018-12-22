@@ -1,0 +1,12 @@
+.hf-activity-loop .hf-activity-icon {
+  background: #ffffff url("../../images/activityLoop32.png") no-repeat;
+}
+
+.hf-loop-back {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  position: relative;
+  background: transparent url("../../images/loopBack.png") no-repeat;
+  z-index: 1;
+}
