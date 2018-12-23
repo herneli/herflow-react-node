@@ -1,0 +1,12 @@
+{
+  "all": [
+    {
+      "fact": [
+        "name",
+        { "op": "substring", "params": { "start": "test", "end": 3 } }
+      ],
+      "op": "eq",
+      "params": { "value": "Jor" }
+    }
+  ]
+}

@@ -10,6 +10,7 @@
     "history": "^4.7.2",
     "i18n-react": "^0.6.4",
     "json-schema-ref-parser": "^6.0.2",
+    "jsonschema": "^1.2.4",
     "jsplumb": "^2.8.3",
     "jwt-decode": "^2.2.0",
     "mdi-material-ui": "^5.7.0",

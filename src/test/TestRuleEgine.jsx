@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Engine from "../ruleit/RuleEngine";
 
 const user = {
-  name: null,
+  name: "Jordi Hernandez",
   createdAt: new Date("2018-02-01"),
   mainCity: "Terrassa",
   addresses: [{ city: "Terrassa" }, { city: "Barcelona" }]
@@ -11,14 +11,9 @@ const options = {
   condition: {
     all: [
       {
-        fact: "createdAt",
-        op: "log",
-        params: { name: "Created at:" }
-      },
-      {
-        fact: "name",
+        fact: ["name", { op: "substring", params: { start: "test", end: 3 } }],
         op: "eq",
-        params: { value: null }
+        params: { value: "Jor" }
       }
     ]
   }

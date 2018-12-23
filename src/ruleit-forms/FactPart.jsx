@@ -10,6 +10,7 @@ import IconIndex from "mdi-material-ui/CodeBrackets";
 import { withStyles } from "@material-ui/core/styles";
 import FactSchemaMenu from "./FactSchemaMenu";
 import getSchemaIcon from "./getSchemaIcon";
+import OperatorEditor from "./OperatorEditor";
 
 Boolean();
 const styles = theme => ({
@@ -28,7 +29,7 @@ const styles = theme => ({
 class FactPart extends Component {
   constructor(props) {
     super(props);
-    this.state = { menuAnchor: false };
+    this.state = { menuAnchor: false, operatorPath: null };
   }
   handleAction = event => {
     if (this.props.withMenu) {
@@ -60,14 +61,27 @@ class FactPart extends Component {
         this.props.onAddPath && this.props.onAddPath(item.key);
         break;
       case "operator":
+        this.setState({ menuAnchor: null, operatorPath: { op: item.key } });
         break;
       default:
     }
   };
 
+  handleOnOperatorAdded = path => {
+    this.setState({ ...this.state, operatorPath: null });
+    this.props.onAddPath && this.props.onAddPath(path);
+  };
+
   render() {
     let { token, classes } = this.props;
     let label = token.name;
+    if (
+      token.path &&
+      token.path.params &&
+      Object.keys(token.path.params).length
+    ) {
+      label = label + " with params: " + JSON.stringify(token.path.params);
+    }
     let sourceIcon = this.getSourceIcon(token.source);
     let schemaIcon = getSchemaIcon(token.schema);
     let menuOpen = Boolean(this.state.menuAnchor);
@@ -90,6 +104,14 @@ class FactPart extends Component {
             open={menuOpen}
             onClose={this.handleOnMenuClose}
             onSelect={this.handleOnMenuSelect}
+            operators={this.props.operators}
+          />
+        ) : null}
+        {this.state.operatorPath ? (
+          <OperatorEditor
+            path={this.state.operatorPath}
+            operators={this.props.operators}
+            onOperatorAdded={this.handleOnOperatorAdded}
           />
         ) : null}
       </React.Fragment>
@@ -99,6 +121,7 @@ class FactPart extends Component {
 
 FactPart.propTypes = {
   token: PropTypes.object.isRequired,
+  operators: PropTypes.object.isRequired,
   withMenu: PropTypes.bool
 };
 

@@ -16,31 +16,48 @@ const operators = {
       return String(value).substring(params.start, params.end);
     },
     allowed: ["string"],
-    params: {
-      start: { allowed: ["number"] },
-      end: { allowed: ["number"] }
+    paramSchema: {
+      type: "object",
+      properties: {
+        start: { type: "integer" },
+        end: { type: "integer" }
+      },
+      required: ["start", "end"]
     },
     output: "string"
   },
   filter: {
     call: (value, params) => filter(value, { [params.field]: params.value }),
     allowed: ["array"],
-    params: {
-      field: { allowed: ["string"] },
-      value: {}
+    paramSchema: {
+      type: "object",
+      properties: {
+        field: { type: "string" },
+        value: {}
+      }
     },
     output: "item"
   },
   contains: {
     call: (value, item) => value.includes(item),
     allowed: ["array"],
-    params: { item: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        item: {}
+      }
+    },
     output: "boolean"
   },
   doesNotContains: {
     call: (value, item) => !value.includes(item),
     allowed: ["array"],
-    params: { item: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        item: {}
+      }
+    },
     output: "boolean"
   },
   in: {
@@ -51,7 +68,12 @@ const operators = {
         throw new Error("In parameter must be an array");
       }
     },
-    params: { array: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        array: { type: "array" }
+      }
+    },
     output: "boolean"
   },
   notIn: {
@@ -62,37 +84,72 @@ const operators = {
         throw new Error("In parameter must be an array");
       }
     },
-    params: { array: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        array: { type: "array" }
+      }
+    },
     output: "boolean"
   },
   eq: {
     call: (value, params) => value === params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   ne: {
     call: (value, params) => value !== params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   le: {
     call: (value, params) => value <= params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   lt: {
     call: (value, params) => value < params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   ge: {
     call: (value, params) => value >= params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   gt: {
     call: (value, params) => value > params.value,
-    params: { value: {} },
+    paramSchema: {
+      type: "object",
+      properties: {
+        value: {}
+      }
+    },
     output: "boolean"
   },
   log: {
@@ -103,11 +160,10 @@ const operators = {
   }
 };
 
-const getOperatorsByType = (type, addedOperators = {}) => {
+const filterOperatorsByType = (operators, type) => {
   let filteredOperators = {};
-  let selectedOperators = Object.assign({}, operators, addedOperators);
-  Object.keys(selectedOperators).forEach(operatorKey => {
-    let operator = selectedOperators[operatorKey];
+  Object.keys(operators).forEach(operatorKey => {
+    let operator = operators[operatorKey];
     if (operator.allowed) {
       if (operator.allowed.includes(type)) {
         filteredOperators[operatorKey] = operator;
@@ -118,5 +174,5 @@ const getOperatorsByType = (type, addedOperators = {}) => {
   });
   return filteredOperators;
 };
-export { getOperatorsByType };
+export { filterOperatorsByType };
 export default operators;

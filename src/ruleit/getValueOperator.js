@@ -1,25 +1,20 @@
-import { get } from "lodash";
+import { get, isObject } from "lodash";
 import getType from "./getType";
+import { validate } from "jsonschema";
 
 const validateParams = (fn, params) => {
-  if (!fn.params) {
+  if (!fn.paramSchema || !isObject(fn.paramSchema.properties)) {
     return;
   }
 
-  Object.keys(fn.params).forEach(paramKey => {
+  Object.keys(fn.paramSchema.properties).forEach(paramKey => {
     let paramValue = get(params, paramKey, null);
-    let paramValueType = getType(paramValue);
-    let fnParam = fn.params[paramKey];
-    if (fnParam.required && !paramValue) {
-      throw new Error(`Parameter ${paramKey} is required`);
-    }
-    let allowed = fnParam.allowed || [];
-    if (allowed.length > 0 && !allowed.includes(paramValueType)) {
-      throw new Error(
-        `Parameter "${paramKey}" of type "${paramValueType}" not expected. Allowed (${allowed.join(
-          ","
-        )})`
-      );
+    let schemaValidation = validate(
+      paramValue,
+      fn.paramSchema.properties[paramKey]
+    );
+    if (!schemaValidation.valid) {
+      throw new Error(`Parameter "${paramKey}" not valid`);
     }
   });
 };

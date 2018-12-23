@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { getOperatorsByType } from "../ruleit/operators";
+import { filterOperatorsByType } from "../ruleit/operators";
 import IconOperator from "mdi-material-ui/FunctionVariant";
 import IconProperty from "mdi-material-ui/WrenchOutline";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import getSchemaIcon from "./getSchemaIcon";
+import PropTypes from "prop-types";
 
-export default class FactSchemaMenu extends Component {
+class FactSchemaMenu extends Component {
   handleOnSelect = item => {
     this.props.onSelect && this.props.onSelect(item);
   };
@@ -32,7 +33,7 @@ export default class FactSchemaMenu extends Component {
         );
       });
     }
-    let operators = getOperatorsByType(schema.type);
+    let operators = filterOperatorsByType(this.props.operators, schema.type);
     Object.keys(operators).forEach(operatorKey => {
       menuItems.push(
         <MenuItem
@@ -60,3 +61,9 @@ export default class FactSchemaMenu extends Component {
     }
   }
 }
+
+FactSchemaMenu.propTypes = {
+  operators: PropTypes.object.isRequired
+};
+
+export default FactSchemaMenu;
