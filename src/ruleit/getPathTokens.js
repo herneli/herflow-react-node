@@ -1,7 +1,11 @@
 import { isArray, isString, isInteger, isObject } from "lodash";
+import tokenSourceType from "./tokenSourceType";
 
 const cleanPath = path => {
   let newPath = [];
+  if (!path) {
+    path = [];
+  }
   if (isString(path)) {
     let pathClean = path.replace("[", ".");
     pathClean = pathClean.replace("]", "");
@@ -47,13 +51,13 @@ const getSchemaPath = (schema, path, options = {}) => {
   let operators = options.operators || {};
   try {
     path = cleanPath(path);
-    let schemaParts = [];
+    let pathTokens = [];
     let subSchema = schema;
 
-    schemaParts.push({
+    pathTokens.push({
       name: options.rootName || "root",
       path: null,
-      source: "root",
+      source: tokenSourceType.root,
       schema: subSchema
     });
     path.forEach(pathItem => {
@@ -61,10 +65,10 @@ const getSchemaPath = (schema, path, options = {}) => {
         let property = subSchema.properties[pathItem];
         if (property) {
           subSchema = property;
-          schemaParts.push({
+          pathTokens.push({
             name: pathItem,
             path: pathItem,
-            source: "property",
+            source: tokenSourceType.property,
             schema: subSchema
           });
         } else {
@@ -75,10 +79,10 @@ const getSchemaPath = (schema, path, options = {}) => {
           throw new Error(`Path item "integer" only allowed in arrays`);
         } else {
           subSchema = subSchema.items;
-          schemaParts.push({
+          pathTokens.push({
             name: "[" + pathItem + "]",
             path: pathItem,
-            source: "index",
+            source: tokenSourceType.index,
             schema: subSchema
           });
         }
@@ -96,17 +100,17 @@ const getSchemaPath = (schema, path, options = {}) => {
         } else {
           subSchema = { type: operator.output };
         }
-        schemaParts.push({
+        pathTokens.push({
           name: pathItem.op,
           path: pathItem,
-          source: "operator",
+          source: tokenSourceType.operator,
           schema: subSchema
         });
       } else {
         throw new Error("Path item not allowed");
       }
     });
-    return schemaParts;
+    return pathTokens;
   } catch (error) {
     console.error(error);
     return null;

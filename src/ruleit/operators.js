@@ -103,7 +103,7 @@ const operators = {
   }
 };
 
-const operatorByType = (type, addedOperators = {}) => {
+const getOperatorsByType = (type, addedOperators = {}) => {
   let filteredOperators = {};
   let selectedOperators = Object.assign({}, operators, addedOperators);
   Object.keys(selectedOperators).forEach(operatorKey => {
@@ -118,5 +118,5 @@ const operatorByType = (type, addedOperators = {}) => {
   });
   return filteredOperators;
 };
-export { operatorByType };
+export { getOperatorsByType };
 export default operators;

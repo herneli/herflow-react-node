@@ -4,12 +4,24 @@ import getPathTokens, { cleanPath } from "../ruleit/getPathTokens";
 import refParser from "json-schema-ref-parser";
 import operators from "../ruleit/operators";
 import FactPart from "./FactPart";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = theme => ({
+  root: {
+    backgroundColor: theme.palette.common.white,
+    padding: "10px 0px 12px 5px",
+    borderRadius: "5px",
+    border: "1px solid",
+    borderColor: theme.palette.primary.light
+  }
+});
 
 class FactSelector extends Component {
   constructor(props) {
     super(props);
     this.state = { schema: null };
   }
+
   componentDidMount = () => {
     if (this.props.schema) {
       refParser.dereference(this.props.schema).then(refSchema => {
@@ -18,7 +30,12 @@ class FactSelector extends Component {
     }
   };
 
+  handleOnAddPath = path => {
+    this.setState({ ...this.setState, path: [...this.state.path, path] });
+  };
+
   render() {
+    let { classes } = this.props;
     if (this.state.schema) {
       let pathTokens = getPathTokens(this.state.schema, this.state.path, {
         operators,
@@ -27,14 +44,17 @@ class FactSelector extends Component {
       console.log(pathTokens);
       if (pathTokens) {
         let pathComponents = pathTokens.map((pathToken, index) => {
-          return <FactPart key={index} pathToken={pathToken} />;
+          console.log("Path Token", index === pathTokens.length - 1);
+          return (
+            <FactPart
+              key={index}
+              token={pathToken}
+              withMenu={index === pathTokens.length - 1}
+              onAddPath={this.handleOnAddPath}
+            />
+          );
         });
-        return (
-          <div>
-            <h1>Fact selector</h1>
-            {pathComponents}
-          </div>
-        );
+        return <span className={classes.root}>{pathComponents}</span>;
       } else {
         return <h1>Error reading tokens</h1>;
       }
@@ -51,4 +71,4 @@ FactSelector.propTypes = {
   onChange: PropTypes.func
 };
 
-export default FactSelector;
+export default withStyles(styles)(FactSelector);

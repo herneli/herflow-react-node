@@ -4,7 +4,7 @@ import operators, { operatorByType } from "../ruleit/operators";
 import schema from "./schema.json";
 import refParser from "json-schema-ref-parser";
 
-let path = ["addresses", 1, "city", { op: "toLower" }];
+let path = ["addresses"];
 
 export default class TestFactSelector extends Component {
   constructor(props) {
