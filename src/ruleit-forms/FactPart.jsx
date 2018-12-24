@@ -10,7 +10,7 @@ import IconIndex from "mdi-material-ui/CodeBrackets";
 import { withStyles } from "@material-ui/core/styles";
 import FactSchemaMenu from "./FactSchemaMenu";
 import getSchemaIcon from "./getSchemaIcon";
-import OperatorEditor from "./OperatorEditor";
+import OperatorEditor from "./editors/OperatorEditor";
 
 Boolean();
 const styles = theme => ({

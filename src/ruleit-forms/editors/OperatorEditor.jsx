@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import TextEditor from "./editors/TextEditor";
+import ParamEditor from "./ParamEditor";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -10,7 +10,7 @@ import IconOperator from "mdi-material-ui/FunctionVariant";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { validate } from "jsonschema";
 import { withStyles } from "@material-ui/core";
-import getSchemaIcon from "./getSchemaIcon";
+import getSchemaIcon from "../getSchemaIcon";
 
 const styles = theme => ({
   iconType: {
@@ -45,7 +45,6 @@ class OperatorEditor extends Component {
           params: this.state.params
         });
     } else {
-      console.log(validationResult);
       this.setState({ ...this.state, error: validationResult });
     }
   };
@@ -81,16 +80,15 @@ class OperatorEditor extends Component {
         let typeIcon = getSchemaIcon(schema.properties[paramKey], {
           className: classes.iconType
         });
-        console.log(typeIcon);
         operatorParamEditors.push(
           <div key={paramKey}>
-            <TextEditor
+            <ParamEditor
               name={paramKey}
               schema={schema.properties[paramKey]}
               value={this.state.params[paramKey] || ""}
               onChange={this.handleChange}
               error={!!errors[paramKey]}
-              helperText={errors[paramKey]}
+              errorMessage={errors[paramKey]}
               InputProps={{
                 startAdornment: typeIcon ? (
                   <InputAdornment position="start">{typeIcon}</InputAdornment>

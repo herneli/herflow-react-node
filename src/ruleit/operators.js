@@ -44,6 +44,17 @@ const operators = {
     },
     output: "item"
   },
+  item: {
+    call: params => params.$this[params.item],
+    allowed: ["array"],
+    paramSchema: {
+      type: "object",
+      properties: {
+        item: { type: "integer" }
+      }
+    },
+    output: "item"
+  },
   contains: {
     call: params => params.$this.includes(params.item),
     allowed: ["array"],
