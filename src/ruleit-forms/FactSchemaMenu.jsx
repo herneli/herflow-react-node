@@ -3,7 +3,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { filterOperatorsByType } from "../ruleit/operators";
 import IconOperator from "mdi-material-ui/FunctionVariant";
-import IconProperty from "mdi-material-ui/WrenchOutline";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import getSchemaIcon from "./getSchemaIcon";

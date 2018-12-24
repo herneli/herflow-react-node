@@ -6,20 +6,25 @@ import IconBoolean from "mdi-material-ui/ToggleSwitch";
 import IconArray from "mdi-material-ui/Contain";
 import IconDate from "mdi-material-ui/Calendar";
 
-const getSchemaIcon = schema => {
+const getSchemaIcon = (schema, props = {}) => {
   switch (schema.type) {
     case "string":
-      return <IconString fontSize="small" />;
+      switch (schema.format) {
+        case "date":
+          return <IconDate {...props} fontSize="small" />;
+        default:
+          return <IconString {...props} fontSize="small" />;
+      }
     case "object":
-      return <IconObject fontSize="small" />;
+      return <IconObject {...props} fontSize="small" />;
     case "array":
-      return <IconArray fontSize="small" />;
+      return <IconArray {...props} fontSize="small" />;
     case "number":
-      return <IconNumber fontSize="small" />;
+    case "integer":
+      return <IconNumber {...props} fontSize="small" />;
     case "boolean":
-      return <IconBoolean fontSize="small" />;
-    case "date":
-      return <IconDate fontSize="small" />;
+      return <IconBoolean {...props} fontSize="small" />;
+
     default:
       return null;
   }

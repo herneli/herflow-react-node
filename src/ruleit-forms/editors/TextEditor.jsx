@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
+import { withStyles } from "@material-ui/core/styles";
+const styles = {
+  root: {
+    marginTop: 20
+  }
+};
 
-export default class StringEditor extends Component {
+class TextEditor extends Component {
   handleOnChange = event => {
     let value = event.target.value;
     if (
@@ -9,7 +15,7 @@ export default class StringEditor extends Component {
       this.props.schema.type === "number"
     ) {
       value = Number(value);
-      if (value !== NaN) {
+      if (!isNaN(value)) {
         this.props.onChange && this.props.onChange(this.props.name, value);
       }
     } else {
@@ -17,7 +23,7 @@ export default class StringEditor extends Component {
     }
   };
   render() {
-    let { value, name, schema } = this.props;
+    let { value, name, schema, classes } = this.props;
     let type = "text";
     if (schema.type === "string") {
       switch (schema.format) {
@@ -30,6 +36,8 @@ export default class StringEditor extends Component {
         case "password":
           type = "password";
           break;
+        default:
+          type = "text";
       }
     } else if (schema.type === "number" || schema.type === "integer") {
       type = "number";
@@ -37,6 +45,7 @@ export default class StringEditor extends Component {
 
     return (
       <TextField
+        className={classes.root}
         fullWidth
         type={type}
         placeholder={name}
@@ -45,7 +54,10 @@ export default class StringEditor extends Component {
         onChange={this.handleOnChange}
         error={this.props.error}
         helperText={this.props.helperText}
+        InputProps={this.props.InputProps}
       />
     );
   }
 }
+
+export default withStyles(styles)(TextEditor);

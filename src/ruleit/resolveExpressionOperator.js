@@ -1,5 +1,4 @@
 import { get, isObject } from "lodash";
-import getType from "./getType";
 import { validate } from "jsonschema";
 import resolveExpression from "./resolveExpression";
 

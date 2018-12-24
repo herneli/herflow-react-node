@@ -7,8 +7,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import IconOperator from "mdi-material-ui/FunctionVariant";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import { validate } from "jsonschema";
-export default class OperatorEditor extends Component {
+import { withStyles } from "@material-ui/core";
+import getSchemaIcon from "./getSchemaIcon";
+
+const styles = theme => ({
+  iconType: {
+    color: theme.palette.primary.light
+  }
+});
+
+class OperatorEditor extends Component {
   constructor(props) {
     super(props);
     let params = this.props.exp && this.props.exp.params;
@@ -46,7 +56,8 @@ export default class OperatorEditor extends Component {
   };
   render() {
     let schema = this.getParamSchema();
-    let operatorParamEditors = null;
+    let operatorParamEditors = [];
+    let { classes } = this.props;
     let errors = {};
     if (this.state.error) {
       this.state.error.errors.forEach(error => {
@@ -63,8 +74,15 @@ export default class OperatorEditor extends Component {
       });
     }
     if (schema && schema.properties) {
-      operatorParamEditors = Object.keys(schema.properties).map(paramKey => {
-        return (
+      Object.keys(schema.properties).forEach(paramKey => {
+        if (paramKey === "$this") {
+          return;
+        }
+        let typeIcon = getSchemaIcon(schema.properties[paramKey], {
+          className: classes.iconType
+        });
+        console.log(typeIcon);
+        operatorParamEditors.push(
           <div key={paramKey}>
             <TextEditor
               name={paramKey}
@@ -73,6 +91,11 @@ export default class OperatorEditor extends Component {
               onChange={this.handleChange}
               error={!!errors[paramKey]}
               helperText={errors[paramKey]}
+              InputProps={{
+                startAdornment: typeIcon ? (
+                  <InputAdornment position="start">{typeIcon}</InputAdornment>
+                ) : null
+              }}
             />
           </div>
         );
@@ -101,3 +124,5 @@ OperatorEditor.propTypes = {
   exp: PropTypes.object,
   operators: PropTypes.object
 };
+
+export default withStyles(styles)(OperatorEditor);

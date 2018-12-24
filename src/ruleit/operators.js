@@ -1,4 +1,4 @@
-import { isArray, filter } from "lodash";
+import { filter } from "lodash";
 
 const operators = {
   toLower: {

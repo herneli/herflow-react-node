@@ -4,7 +4,7 @@ import schema from "./schema.json";
 import refParser from "json-schema-ref-parser";
 import FactSelector from "../ruleit-forms/FactSelector";
 
-let exp = ["addresses"];
+let exp = [];
 
 export default class TestFactSelector extends Component {
   constructor(props) {
