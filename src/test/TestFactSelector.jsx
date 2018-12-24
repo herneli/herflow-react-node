@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import getSchemaPath from "../ruleit/getSchemaPath";
-import operators, { operatorByType } from "../ruleit/operators";
+import operators from "../ruleit/operators";
 import schema from "./schema.json";
 import refParser from "json-schema-ref-parser";
+import FactSelector from "../ruleit-forms/FactSelector";
 
-let path = ["addresses"];
+let exp = ["addresses"];
 
 export default class TestFactSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = { schema: null };
+    this.state = { schema: null, exp: exp };
   }
   componentDidMount = () => {
     refParser.dereference(schema).then(schemaRef => {
@@ -17,15 +17,24 @@ export default class TestFactSelector extends Component {
     });
   };
 
+  handleOnChange = name => value => {
+    console.log(name, value);
+    this.setState({ ...this.state, [name]: value });
+  };
+
   render() {
     if (this.state.schema) {
-      let property = getSchemaPath(schema, path, operators);
-      console.log(property);
+      return (
+        <FactSelector
+          schema={this.state.schema}
+          exp={this.state.exp}
+          operators={operators}
+          name="User"
+          onChange={this.handleOnChange("exp")}
+        />
+      );
+    } else {
+      return <h1>Loading...</h1>;
     }
-    return (
-      <div>
-        <h1>Test path selector</h1>
-      </div>
-    );
   }
 }

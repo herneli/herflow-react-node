@@ -2,18 +2,24 @@ import { isArray, filter } from "lodash";
 
 const operators = {
   toLower: {
-    call: value => String(value).toLowerCase(),
-    allowed: ["string"],
-    output: "string"
+    call: params => String(params.$this).toLowerCase(),
+    output: "string",
+    paramSchema: {
+      type: "object",
+      properties: {
+        $this: { type: "string" }
+      }
+    },
+    allowed: ["string"]
   },
   toUpper: {
-    call: value => String(value).toUpperCase(),
+    call: params => String(params.$this).toUpperCase(),
     allowed: ["string"],
     output: "string"
   },
   substring: {
-    call: (value, params) => {
-      return String(value).substring(params.start, params.end);
+    call: params => {
+      return String(params.$this).substring(params.start, params.end);
     },
     allowed: ["string"],
     paramSchema: {
@@ -27,7 +33,7 @@ const operators = {
     output: "string"
   },
   filter: {
-    call: (value, params) => filter(value, { [params.field]: params.value }),
+    call: params => filter(params.$this, { [params.field]: params.value }),
     allowed: ["array"],
     paramSchema: {
       type: "object",
@@ -39,7 +45,7 @@ const operators = {
     output: "item"
   },
   contains: {
-    call: (value, item) => value.includes(item),
+    call: params => params.$this.includes(params.item),
     allowed: ["array"],
     paramSchema: {
       type: "object",
@@ -50,7 +56,7 @@ const operators = {
     output: "boolean"
   },
   doesNotContains: {
-    call: (value, item) => !value.includes(item),
+    call: params => !params.$this.includes(params.item),
     allowed: ["array"],
     paramSchema: {
       type: "object",
@@ -61,12 +67,8 @@ const operators = {
     output: "boolean"
   },
   in: {
-    call: (value, array) => {
-      if (isArray(array)) {
-        return array.includes(value);
-      } else {
-        throw new Error("In parameter must be an array");
-      }
+    call: params => {
+      return params.array.includes(params.$this);
     },
     paramSchema: {
       type: "object",
@@ -77,12 +79,8 @@ const operators = {
     output: "boolean"
   },
   notIn: {
-    call: (value, array) => {
-      if (isArray(array)) {
-        return !array.includes(value);
-      } else {
-        throw new Error("In parameter must be an array");
-      }
+    call: params => {
+      return !params.array.includes(params.$this);
     },
     paramSchema: {
       type: "object",
@@ -93,7 +91,7 @@ const operators = {
     output: "boolean"
   },
   eq: {
-    call: (value, params) => value === params.value,
+    call: params => params.$this === params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -103,7 +101,7 @@ const operators = {
     output: "boolean"
   },
   ne: {
-    call: (value, params) => value !== params.value,
+    call: params => params.$this !== params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -113,7 +111,7 @@ const operators = {
     output: "boolean"
   },
   le: {
-    call: (value, params) => value <= params.value,
+    call: params => params.$this <= params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -123,7 +121,7 @@ const operators = {
     output: "boolean"
   },
   lt: {
-    call: (value, params) => value < params.value,
+    call: params => params.$this < params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -133,7 +131,7 @@ const operators = {
     output: "boolean"
   },
   ge: {
-    call: (value, params) => value >= params.value,
+    call: params => params.$this >= params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -143,7 +141,7 @@ const operators = {
     output: "boolean"
   },
   gt: {
-    call: (value, params) => value > params.value,
+    call: params => params.$this > params.value,
     paramSchema: {
       type: "object",
       properties: {
@@ -152,8 +150,12 @@ const operators = {
     },
     output: "boolean"
   },
+  sum: {
+    call: params => params.value1 + params.value2,
+    output: "number"
+  },
   log: {
-    call: (value, params) => {
+    call: params => {
       return true;
     },
     output: "boolean"

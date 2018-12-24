@@ -1,7 +1,6 @@
-import { isObject, isArray } from "lodash";
-import getValue from "./getValue";
+import { isObject, isArray, isBoolean } from "lodash";
+import resolveExpression from "./resolveExpression";
 import defaultOperators from "./operators";
-import getValueOperator from "./getValueOperator";
 const defaultOptions = {};
 
 export default class RuleEngine {
@@ -13,14 +12,14 @@ export default class RuleEngine {
   /**
    * Run engine to evaluate conditions
    */
-  run(facts) {
-    return this.checkCondition(facts, this.options.condition);
+  run(context) {
+    return this.checkCondition(context, this.options.condition);
   }
 
   /**
    * Check condition
    */
-  checkCondition(facts, condition) {
+  checkCondition(context, condition) {
     return new Promise((resolve, reject) => {
       if (!isObject(condition)) {
         reject(new Error(`Options: "condition" must be an object`));
@@ -34,7 +33,7 @@ export default class RuleEngine {
         }
 
         let conditionPromises = condition.all.map(conditionItem => {
-          let promise = this.checkCondition(facts, conditionItem);
+          let promise = this.checkCondition(context, conditionItem);
           return promise;
         });
         Promise.all(conditionPromises)
@@ -55,7 +54,7 @@ export default class RuleEngine {
           );
         }
         let conditionPromises = condition.any.map(conditionItem => {
-          return this.checkCondition(facts, conditionItem);
+          return this.checkCondition(context, conditionItem);
         });
         Promise.all(conditionPromises)
           .then(values => {
@@ -68,46 +67,17 @@ export default class RuleEngine {
           .catch(reason => reject(reason));
 
         // Condition is a "fact" rule
-      } else if (condition.fact) {
+      } else if (condition.$exp) {
         // Condition type not valid
-        let factValue = getValue(facts, condition.fact, this.operators);
-        if (condition.op) {
-          // Resolve params
-          let paramsResolved = {};
-          if (condition.params) {
-            if (!isObject(condition.params)) {
-              reject(new Error(`Params must be an object`));
-            }
-            Object.keys(condition.params).forEach(paramKey => {
-              if (
-                isObject(condition.params[paramKey]) &&
-                condition.params[paramKey].fact
-              ) {
-                paramsResolved[paramKey] = getValue(
-                  facts,
-                  condition.params[paramKey].fact,
-                  this.operators
-                );
-              } else {
-                paramsResolved[paramKey] = condition.params[paramKey];
-              }
-            });
-          }
-          let value = getValueOperator(
-            factValue,
-            {
-              op: condition.op,
-              params: paramsResolved
-            },
-            this.operators
-          );
-          if (value) {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
+        let expValue = resolveExpression(
+          context,
+          condition.$exp,
+          this.operators
+        );
+        if (!isBoolean(expValue)) {
+          reject(new Error("Expression must return a boolean."));
         } else {
-          reject(new Error("Condition type not valid"));
+          resolve(expValue);
         }
       } else {
         reject(new Error("Condition type not valid"));

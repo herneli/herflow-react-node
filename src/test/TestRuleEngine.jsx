@@ -2,18 +2,24 @@ import React, { Component } from "react";
 import Engine from "../ruleit/RuleEngine";
 
 const user = {
-  name: "Jordi Hernandez",
+  name: "Jordi",
   createdAt: new Date("2018-02-01"),
   mainCity: "Terrassa",
-  addresses: [{ city: "Terrassa" }, { city: "Barcelona" }]
+  addresses: [
+    { city: "Terrassa", postalCode: "08221" },
+    { city: "Barcelona", postalCode: "08080" }
+  ]
 };
 const options = {
   condition: {
-    all: [
+    any: [
       {
-        fact: ["name", { op: "substring", params: { start: "test", end: 3 } }],
-        op: "eq",
-        params: { value: "Jor" }
+        $exp: [
+          "addresses",
+          { op: "filter", params: { field: "city", value: "Barcelona" } },
+          "0.postalCode",
+          { op: "eq", value: "08080" }
+        ]
       }
     ]
   }
@@ -33,7 +39,7 @@ export default class TestRuleEgine extends Component {
         console.log(response);
       })
       .catch(reason => {
-        this.setState({ responseType: "Error", response: reason });
+        this.setState({ responseType: "Error", response: reason.message });
         console.log(reason);
       });
   };

@@ -11,7 +11,7 @@ import { validate } from "jsonschema";
 export default class OperatorEditor extends Component {
   constructor(props) {
     super(props);
-    let params = this.props.path && this.props.path.params;
+    let params = this.props.exp && this.props.exp.params;
     this.state = { params: params || {} };
   }
   handleChange = (name, value) => {
@@ -31,7 +31,7 @@ export default class OperatorEditor extends Component {
     if (validationResult.valid) {
       this.props.onOperatorAdded &&
         this.props.onOperatorAdded({
-          op: this.props.path.op,
+          op: this.props.exp.op,
           params: this.state.params
         });
     } else {
@@ -41,7 +41,7 @@ export default class OperatorEditor extends Component {
   };
 
   getParamSchema = () => {
-    let operator = this.props.operators[this.props.path.op];
+    let operator = this.props.operators[this.props.exp.op];
     return operator && operator.paramSchema;
   };
   render() {
@@ -81,7 +81,7 @@ export default class OperatorEditor extends Component {
     return (
       <Dialog onClose={this.handleClose} open={true} fullWidth={true}>
         <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
-          <IconOperator /> {this.props.path.op}
+          <IconOperator /> {this.props.exp.op}
         </DialogTitle>
         <DialogContent>
           {this.state.error ? <span>Please check errors</span> : null}
@@ -98,6 +98,6 @@ export default class OperatorEditor extends Component {
 }
 
 OperatorEditor.propTypes = {
-  path: PropTypes.object,
+  exp: PropTypes.object,
   operators: PropTypes.object
 };

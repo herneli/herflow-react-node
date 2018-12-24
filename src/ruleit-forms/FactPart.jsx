@@ -29,7 +29,7 @@ const styles = theme => ({
 class FactPart extends Component {
   constructor(props) {
     super(props);
-    this.state = { menuAnchor: false, operatorPath: null };
+    this.state = { menuAnchor: false, operatorExp: null };
   }
   handleAction = event => {
     if (this.props.withMenu) {
@@ -58,29 +58,25 @@ class FactPart extends Component {
     switch (item.type) {
       case "property":
         this.setState({ menuAnchor: null });
-        this.props.onAddPath && this.props.onAddPath(item.key);
+        this.props.onAddExp && this.props.onAddExp(item.key);
         break;
       case "operator":
-        this.setState({ menuAnchor: null, operatorPath: { op: item.key } });
+        this.setState({ menuAnchor: null, operatorExp: { op: item.key } });
         break;
       default:
     }
   };
 
-  handleOnOperatorAdded = path => {
-    this.setState({ ...this.state, operatorPath: null });
-    this.props.onAddPath && this.props.onAddPath(path);
+  handleOnOperatorAdded = exp => {
+    this.setState({ ...this.state, operatorExp: null });
+    this.props.onAddExp && this.props.onAddExp(exp);
   };
 
   render() {
     let { token, classes } = this.props;
     let label = token.name;
-    if (
-      token.path &&
-      token.path.params &&
-      Object.keys(token.path.params).length
-    ) {
-      label = label + " with params: " + JSON.stringify(token.path.params);
+    if (token.exp && token.exp.params && Object.keys(token.exp.params).length) {
+      label = label + " with params: " + JSON.stringify(token.exp.params);
     }
     let sourceIcon = this.getSourceIcon(token.source);
     let schemaIcon = getSchemaIcon(token.schema);
@@ -107,9 +103,9 @@ class FactPart extends Component {
             operators={this.props.operators}
           />
         ) : null}
-        {this.state.operatorPath ? (
+        {this.state.operatorExp ? (
           <OperatorEditor
-            path={this.state.operatorPath}
+            exp={this.state.operatorExp}
             operators={this.props.operators}
             onOperatorAdded={this.handleOnOperatorAdded}
           />

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import getPathTokens, { cleanPath } from "../ruleit/getPathTokens";
+import getExpressionTokens, {
+  getExpressionArray
+} from "../ruleit/getExpressionTokens";
 import refParser from "json-schema-ref-parser";
 import FactPart from "./FactPart";
 import { withStyles } from "@material-ui/core/styles";
@@ -23,8 +25,8 @@ class FactSelector extends Component {
   }
 
   componentDidMount = () => {
-    let path = cleanPath(this.props.path);
-    this.props.onChange && this.props.onChange(path);
+    let exp = getExpressionArray(this.props.exp);
+    this.props.onChange && this.props.onChange(exp);
     if (this.props.schema) {
       refParser.dereference(this.props.schema).then(refSchema => {
         this.setState({ schema: refSchema });
@@ -32,30 +34,30 @@ class FactSelector extends Component {
     }
   };
 
-  handleOnAddPath = path => {
-    this.props.onChange && this.props.onChange([...this.props.path, path]);
+  handleOnAddExp = exp => {
+    this.props.onChange && this.props.onChange([...this.props.exp, exp]);
   };
 
   render() {
     let { classes } = this.props;
     if (this.state.schema) {
-      let pathTokens = getPathTokens(this.state.schema, this.props.path, {
+      let expTokens = getExpressionTokens(this.state.schema, this.props.exp, {
         operators: this.props.operators,
         rootName: this.props.name
       });
-      if (pathTokens) {
-        let pathComponents = pathTokens.map((pathToken, index) => {
+      if (expTokens) {
+        let expComponents = expTokens.map((expToken, index) => {
           return (
             <FactPart
               key={index}
-              token={pathToken}
-              withMenu={index === pathTokens.length - 1}
-              onAddPath={this.handleOnAddPath}
+              token={expToken}
+              withMenu={index === expTokens.length - 1}
+              onAddExp={this.handleOnAddExp}
               operators={this.props.operators}
             />
           );
         });
-        return <div className={classes.root}>{pathComponents}</div>;
+        return <div className={classes.root}>{expComponents}</div>;
       } else {
         return <h1>Error reading tokens</h1>;
       }
@@ -69,7 +71,7 @@ FactSelector.propTypes = {
   schema: PropTypes.object.isRequired,
   operators: PropTypes.object.isRequired,
   name: PropTypes.string,
-  path: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
+  exp: PropTypes.oneOfType([PropTypes.array, PropTypes.string]),
   onChange: PropTypes.func
 };
 

@@ -1,4 +1,11 @@
-import { isDate, isArray, isBoolean, isRegExp, isError } from "lodash";
+import {
+  isDate,
+  isArray,
+  isBoolean,
+  isRegExp,
+  isError,
+  isNumber
+} from "lodash";
 
 const getType = obj => {
   let type = typeof obj;
@@ -14,6 +21,8 @@ const getType = obj => {
       return "array";
     } else if (isBoolean(obj)) {
       return "boolean";
+    } else if (isNumber(obj)) {
+      return "number";
     } else if (isRegExp(obj)) {
       return "regexp";
     } else if (isError(obj)) {
