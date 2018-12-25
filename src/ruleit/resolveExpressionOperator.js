@@ -1,17 +1,28 @@
-import { get, isObject } from "lodash";
+import { get, isObject, isFunction } from "lodash";
 import { validate } from "jsonschema";
 import resolveExpression from "./resolveExpression";
+import getType from "./getType";
 
 const validateParams = (fn, params) => {
-  if (!fn.paramSchema || !isObject(fn.paramSchema.properties)) {
+  let paramSchema = null;
+  if (fn.paramSchema) {
+    //TODO: Parameter passed to paramSchema function should be the current context schema
+    //Empty object is not validating
+    if (isFunction(fn.paramSchema)) {
+      paramSchema = fn.paramSchema({});
+    } else {
+      paramSchema = fn.paramSchema;
+    }
+  }
+  if (!paramSchema || !isObject(paramSchema.properties)) {
     return;
   }
 
-  Object.keys(fn.paramSchema.properties).forEach(paramKey => {
+  Object.keys(paramSchema.properties).forEach(paramKey => {
     let paramValue = get(params, paramKey, null);
     let schemaValidation = validate(
       paramValue,
-      fn.paramSchema.properties[paramKey]
+      paramSchema.properties[paramKey]
     );
     if (!schemaValidation.valid) {
       throw new Error(`Parameter "${paramKey}" not valid`);

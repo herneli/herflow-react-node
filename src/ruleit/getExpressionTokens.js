@@ -1,4 +1,4 @@
-import { isArray, isString, isInteger, isObject } from "lodash";
+import { isArray, isString, isInteger, isObject, isFunction } from "lodash";
 import tokenSourceType from "./tokenSourceType";
 
 const getExpressionArray = exp => {
@@ -47,6 +47,18 @@ const getExpressionArray = exp => {
   return expParts;
 };
 
+const getOperatorOutput = (operator, thisSchema) => {
+  if (!operator.output) {
+    return thisSchema;
+  } else {
+    if (isFunction(operator.output)) {
+      return operator.output(thisSchema);
+    } else {
+      return operator.output;
+    }
+  }
+};
+
 const getExpressionTokens = (schema, exp, options = {}) => {
   let operators = options.operators || {};
   try {
@@ -91,15 +103,10 @@ const getExpressionTokens = (schema, exp, options = {}) => {
         if (!operator) {
           throw new Error(`Operator "${expItem.op}" not found`);
         }
-        if (!operator.output) {
-          // subSchema = subSchema;
-        } else if (operator.output === "item") {
-          subSchema = subSchema.items;
-        } else if (operator.ouput === "self") {
-          // subSchema = subSchema;
-        } else {
-          subSchema = operator.output;
-        }
+
+        // Calculate subschema output
+        subSchema = getOperatorOutput(operator, subSchema);
+        console.log(subSchema);
         expTokens.push({
           name: expItem.op,
           exp: expItem,

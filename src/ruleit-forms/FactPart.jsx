@@ -107,6 +107,7 @@ class FactPart extends Component {
           <OperatorEditor
             exp={this.state.operatorExp}
             operators={this.props.operators}
+            thisSchema={this.props.token.schema}
             onOperatorAdded={this.handleOnOperatorAdded}
           />
         ) : null}

@@ -42,7 +42,7 @@ const operators = {
         value: {}
       }
     },
-    output: "item"
+    output: $this => $this
   },
   item: {
     call: params => params.$this[params.item],
@@ -53,17 +53,17 @@ const operators = {
         item: { type: "integer" }
       }
     },
-    output: "item"
+    output: $this => $this.items
   },
   contains: {
     call: params => params.$this.includes(params.item),
     allowed: ["array"],
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        item: {}
+        item: $this.items
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   doesNotContains: {

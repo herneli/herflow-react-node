@@ -11,7 +11,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { validate } from "jsonschema";
 import { withStyles } from "@material-ui/core";
 import getSchemaIcon from "../getSchemaIcon";
-
+import { isFunction } from "lodash";
 const styles = theme => ({
   iconType: {
     color: theme.palette.primary.light
@@ -51,7 +51,15 @@ class OperatorEditor extends Component {
 
   getParamSchema = () => {
     let operator = this.props.operators[this.props.exp.op];
-    return operator && operator.paramSchema;
+    if (operator.paramSchema) {
+      if (isFunction(operator.paramSchema)) {
+        return operator.paramSchema(this.props.thisSchema);
+      } else {
+        return operator.paramSchema;
+      }
+    } else {
+      return null;
+    }
   };
   render() {
     let schema = this.getParamSchema();
