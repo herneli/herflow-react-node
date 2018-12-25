@@ -35,7 +35,7 @@ class RuleGroup extends Component {
   handleAddRule = () => {
     this.props.onChange({
       ...this.props.rule,
-      rules: [...this.props.rule.rules, { type: "fact" }]
+      rules: [...this.props.rule.rules, { type: "exp" }]
     });
   };
 
@@ -50,6 +50,7 @@ class RuleGroup extends Component {
   };
 
   handleRuleItemChange = (index, value) => {
+    console.log("RuleGroup handleRuleItemChange", index, value);
     let newRules = [
       ...this.props.rule.rules.slice(0, index),
       value,
@@ -72,6 +73,8 @@ class RuleGroup extends Component {
           key={index}
           rule={rule}
           schema={this.props.schema}
+          operators={this.props.operators}
+          contextName={this.props.contextName}
           onChange={value => this.handleRuleItemChange(index, value)}
           onDelete={() => this.handleRuleItemDelete(index)}
         />

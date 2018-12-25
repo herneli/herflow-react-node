@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import SchemaPropertiesSelector from "./SchemaPropertiesSelector";
 import Button from "@material-ui/core/Button";
 import IconDelete from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
+import FactSelector from "./FactSelector";
 
 let styles = {
   rule: {
@@ -18,12 +18,23 @@ let styles = {
     marginLeft: 20
   }
 };
-class RuleFact extends Component {
+class RuleExp extends Component {
+  handleOnChange = value => {
+    console.log("Calling RuleExp.onChange", value);
+    this.props.onChange &&
+      this.props.onChange({ ...this.props.rule, exp: value });
+  };
   render() {
     let { classes } = this.props;
     return (
       <div className={classes.rule}>
-        <SchemaPropertiesSelector schema={this.props.schema} />
+        <FactSelector
+          schema={this.props.schema}
+          exp={this.props.rule.exp}
+          operators={this.props.operators}
+          name={this.props.contextName}
+          onChange={this.handleOnChange}
+        />
         {this.props.onDelete ? (
           <Button
             className={classes.removeGroupButton}
@@ -40,4 +51,4 @@ class RuleFact extends Component {
   }
 }
 
-export default withStyles(styles)(RuleFact);
+export default withStyles(styles)(RuleExp);

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 import { isObject, isArray } from "lodash";
 const styles = {
   root: {
@@ -11,7 +13,12 @@ const styles = {
 class ParamEditor extends Component {
   constructor(props) {
     super(props);
-    let value = this.convertValueToString(this.props.value);
+    let value;
+    if (props.schema.type !== "boolean") {
+      value = this.convertValueToString(this.props.value);
+    } else {
+      value = this.props.value;
+    }
     this.state = {
       value: value,
       error: this.props.error,
@@ -21,8 +28,8 @@ class ParamEditor extends Component {
 
   componentDidUpdate = (prevProps, prevState) => {
     if (
-      prevProps.error != this.state.error ||
-      prevProps.errorMessage != this.state.errorMessage
+      prevProps.error !== this.state.error ||
+      prevProps.errorMessage !== this.state.errorMessage
     ) {
       this.setState({
         ...this.state,
@@ -84,10 +91,16 @@ class ParamEditor extends Component {
   };
 
   handleOnChange = event => {
-    let value = event.target.value;
+    let value;
     try {
-      let cleanValue = this.convertStringToValue(value);
-      console.log("CleanValue:", cleanValue);
+      let cleanValue;
+      if (this.props.schema.type !== "boolean") {
+        value = event.target.value;
+        cleanValue = this.convertStringToValue(value);
+      } else {
+        value = event.target.checked;
+        cleanValue = value;
+      }
       this.props.onChange && this.props.onChange(this.props.name, cleanValue);
       this.setState({
         ...this.state,
@@ -110,6 +123,7 @@ class ParamEditor extends Component {
 
     let type = "text";
     let multiline = false;
+    let editor = "text";
 
     switch (schema.type) {
       case "string":
@@ -135,26 +149,44 @@ class ParamEditor extends Component {
         type = "text";
         multiline = true;
         break;
+      case "boolean":
+        editor = "boolean";
       default:
         type = "text";
         multiline = true;
     }
-    return (
-      <TextField
-        className={classes.root}
-        multiline={multiline}
-        fullWidth
-        type={type}
-        placeholder={name}
-        label={name}
-        value={this.state.value}
-        error={this.state.error}
-        helperText={this.state.errorMessage}
-        InputProps={this.props.InputProps}
-        onChange={this.handleOnChange}
-        onBlur={this.handleOnBlur}
-      />
-    );
+    if (editor === "text") {
+      return (
+        <TextField
+          className={classes.root}
+          multiline={multiline}
+          fullWidth
+          type={type}
+          placeholder={name}
+          label={name}
+          value={this.state.value}
+          error={this.state.error}
+          helperText={this.state.errorMessage}
+          InputProps={this.props.InputProps}
+          onChange={this.handleOnChange}
+          onBlur={this.handleOnBlur}
+        />
+      );
+    } else {
+      return (
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={this.state.value}
+              onChange={this.handleOnChange}
+              value={this.state.value}
+              color="primary"
+            />
+          }
+          label={this.props.name}
+        />
+      );
+    }
   }
 }
 

@@ -3,19 +3,19 @@ import { filter } from "lodash";
 const operators = {
   toLower: {
     call: params => String(params.$this).toLowerCase(),
-    output: "string",
     paramSchema: {
       type: "object",
       properties: {
         $this: { type: "string" }
       }
     },
-    allowed: ["string"]
+    allowed: ["string"],
+    output: { type: "string" }
   },
   toUpper: {
     call: params => String(params.$this).toUpperCase(),
     allowed: ["string"],
-    output: "string"
+    output: { type: "string" }
   },
   substring: {
     call: params => {
@@ -25,12 +25,12 @@ const operators = {
     paramSchema: {
       type: "object",
       properties: {
-        start: { type: "integer" },
+        start: { type: "boolean" },
         end: { type: "integer" }
       },
       required: ["start", "end"]
     },
-    output: "string"
+    output: { type: "string" }
   },
   filter: {
     call: params => filter(params.$this, { [params.field]: params.value }),
@@ -64,7 +64,7 @@ const operators = {
         item: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   doesNotContains: {
     call: params => !params.$this.includes(params.item),
@@ -75,7 +75,7 @@ const operators = {
         item: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   in: {
     call: params => {
@@ -87,7 +87,7 @@ const operators = {
         array: { type: "array" }
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   notIn: {
     call: params => {
@@ -99,7 +99,7 @@ const operators = {
         array: { type: "array" }
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   eq: {
     call: params => params.$this === params.value,
@@ -109,7 +109,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   ne: {
     call: params => params.$this !== params.value,
@@ -119,7 +119,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   le: {
     call: params => params.$this <= params.value,
@@ -129,7 +129,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   lt: {
     call: params => params.$this < params.value,
@@ -139,7 +139,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   ge: {
     call: params => params.$this >= params.value,
@@ -149,7 +149,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   gt: {
     call: params => params.$this > params.value,
@@ -159,7 +159,7 @@ const operators = {
         value: {}
       }
     },
-    output: "boolean"
+    output: { type: "boolean" }
   },
   sum: {
     call: params => params.value1 + params.value2,
@@ -169,7 +169,7 @@ const operators = {
     call: params => {
       return true;
     },
-    output: "boolean"
+    output: { type: "boolean" }
   }
 };
 

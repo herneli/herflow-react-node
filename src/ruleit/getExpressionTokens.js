@@ -98,7 +98,7 @@ const getExpressionTokens = (schema, exp, options = {}) => {
         } else if (operator.ouput === "self") {
           // subSchema = subSchema;
         } else {
-          subSchema = { type: operator.output };
+          subSchema = operator.output;
         }
         expTokens.push({
           name: expItem.op,

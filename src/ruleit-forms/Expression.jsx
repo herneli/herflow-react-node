@@ -13,7 +13,7 @@ class Expression extends Component {
     super(props);
     this.state = {
       dialogOpen: false,
-      rule: { type: "group", combinator: "all", rules: [] }
+      rule: this.props.rule
     };
   }
   handleOnChange = value => {
@@ -22,6 +22,7 @@ class Expression extends Component {
 
   handleSave = () => {
     this.setState({ dialogOpen: false });
+    this.onSave && this.onSave(this.state.rule);
   };
 
   handleClose = () => {
@@ -34,10 +35,10 @@ class Expression extends Component {
     return (
       <div>
         <span>{JSON.stringify(this.state.rule)}</span>
-        <Button variant="raised" onClick={this.handleOnEdit}>
+        <Button variant="contained" onClick={this.handleOnEdit}>
           Edit
         </Button>
-        <Dialog open={this.state.dialogOpen} maxWidth="xl" fullWidth={true}>
+        <Dialog open={this.state.dialogOpen} maxWidth="lg" fullWidth={true}>
           <DialogTitle>
             <T.span text="forms.ruleEditor" />
           </DialogTitle>
@@ -45,7 +46,10 @@ class Expression extends Component {
             <Rule
               rule={this.state.rule}
               schema={this.props.schema}
+              operators={this.props.operators}
+              contextName={this.props.contextName}
               onChange={this.handleOnChange}
+              operators={this.props.operators}
             />
           </DialogContent>
           <DialogActions>
@@ -63,7 +67,9 @@ class Expression extends Component {
 }
 
 Expression.propTypes = {
-  conditions: PropTypes.object
+  conditions: PropTypes.object,
+  schema: PropTypes.object.isRequired,
+  operators: PropTypes.object
 };
 
 export default Expression;

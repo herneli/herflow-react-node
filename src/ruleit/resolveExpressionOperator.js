@@ -27,17 +27,17 @@ const resolveExpressionOperator = (
 ) => {
   let operator = operators[expression.op];
   if (operator) {
-    // let allowed = operator.allowed || [];
-    // if (allowed.length > 0) {
-    //   let currentContextType = getType(context);
-    //   if (!allowed.includes(currentContextType)) {
-    //     throw new Error(
-    //       `Operator "${
-    //         expression.op
-    //       }" not allowed with object type "${currentContextType}"`
-    //     );
-    //   }
-    // }
+    let allowed = operator.allowed || [];
+    if (allowed.length > 0) {
+      let currentContextType = getType(context);
+      if (!allowed.includes(currentContextType)) {
+        throw new Error(
+          `Operator "${
+            expression.op
+          }" not allowed with object type "${currentContextType}"`
+        );
+      }
+    }
     // Resolve params
     let params = expression.params || {};
     if (!isObject(params)) {
