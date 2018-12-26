@@ -20,7 +20,6 @@ let styles = {
 };
 class RuleExp extends Component {
   handleOnChange = value => {
-    console.log("Calling RuleExp.onChange", value);
     this.props.onChange &&
       this.props.onChange({ ...this.props.rule, exp: value });
   };

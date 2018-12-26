@@ -88,6 +88,7 @@ class OperatorEditor extends Component {
         let typeIcon = getSchemaIcon(schema.properties[paramKey], {
           className: classes.iconType
         });
+        console.log(schema.properties[paramKey]);
         operatorParamEditors.push(
           <div key={paramKey}>
             <ParamEditor
@@ -117,6 +118,7 @@ class OperatorEditor extends Component {
           {operatorParamEditors}
         </DialogContent>
         <DialogActions>
+          <Button onClick={this.props.onEditorClose}>Cancel</Button>
           <Button onClick={this.handleAdd} color="primary">
             Add operator
           </Button>

@@ -103,62 +103,62 @@ const operators = {
   },
   eq: {
     call: params => params.$this === params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   ne: {
     call: params => params.$this !== params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   le: {
     call: params => params.$this <= params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   lt: {
     call: params => params.$this < params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   ge: {
     call: params => params.$this >= params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   gt: {
     call: params => params.$this > params.value,
-    paramSchema: {
+    paramSchema: $this => ({
       type: "object",
       properties: {
-        value: {}
+        value: $this
       }
-    },
+    }),
     output: { type: "boolean" }
   },
   sum: {

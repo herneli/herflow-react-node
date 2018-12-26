@@ -72,6 +72,10 @@ class FactPart extends Component {
     this.props.onAddExp && this.props.onAddExp(exp);
   };
 
+  handleOnEditorClose = () => {
+    this.setState({ ...this.state, operatorExp: null });
+  };
+
   render() {
     let { token, classes } = this.props;
     let label = token.name;
@@ -109,6 +113,7 @@ class FactPart extends Component {
             operators={this.props.operators}
             thisSchema={this.props.token.schema}
             onOperatorAdded={this.handleOnOperatorAdded}
+            onEditorClose={this.handleOnEditorClose}
           />
         ) : null}
       </React.Fragment>

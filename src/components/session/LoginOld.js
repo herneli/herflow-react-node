@@ -87,7 +87,6 @@ class Login extends Component {
 
   render() {
     const LoginButton = useRocheLogin(Button);
-    console.log(styles);
     return (
       <Grid container spacing={16}>
         <Grid item xs={6}>

@@ -58,7 +58,6 @@ class Workflow extends Component {
     let newWorkflow = _.assign({}, this.state.workflow, {
       mainActivity: activity
     });
-    console.log("handleOnChangeMainActivity");
     this.setState({ workflow: newWorkflow });
   }
 
@@ -71,7 +70,6 @@ class Workflow extends Component {
       this.workflowManager.workflow = this.state.workflow;
     }
     if (this.state.workflow) {
-      console.log("render");
       const ActivityChart = this.workflowManager.getActivityChart(
         this.state.workflow.mainActivity
       );

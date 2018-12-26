@@ -50,7 +50,6 @@ class RuleGroup extends Component {
   };
 
   handleRuleItemChange = (index, value) => {
-    console.log("RuleGroup handleRuleItemChange", index, value);
     let newRules = [
       ...this.props.rule.rules.slice(0, index),
       value,

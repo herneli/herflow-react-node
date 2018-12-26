@@ -26,7 +26,6 @@ class FactSelector extends Component {
 
   componentDidMount = () => {
     let exp = getExpressionArray(this.props.exp);
-    console.log("Calling FactSelector.onChange", exp);
     this.props.onChange && this.props.onChange(exp);
     if (this.props.schema) {
       refParser.dereference(this.props.schema).then(refSchema => {
@@ -36,12 +35,10 @@ class FactSelector extends Component {
   };
 
   handleOnAddExp = exp => {
-    console.log(this.props.exp);
     this.props.onChange && this.props.onChange([...this.props.exp, exp]);
   };
 
   render() {
-    console.log("Render FactSelector Props:", this.props);
     let { classes } = this.props;
     if (this.state.schema) {
       let expTokens = getExpressionTokens(this.state.schema, this.props.exp, {

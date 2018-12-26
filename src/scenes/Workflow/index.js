@@ -9,7 +9,6 @@ class WorkflowDev extends Component {
   }
 
   render() {
-    console.log("render main");
     return (
       <Workflow workflow={this.props.workflow} onChange={this.props.onChange} />
     );

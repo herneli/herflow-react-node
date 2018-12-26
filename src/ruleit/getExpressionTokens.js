@@ -106,7 +106,6 @@ const getExpressionTokens = (schema, exp, options = {}) => {
 
         // Calculate subschema output
         subSchema = getOperatorOutput(operator, subSchema);
-        console.log(subSchema);
         expTokens.push({
           name: expItem.op,
           exp: expItem,
