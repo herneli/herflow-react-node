@@ -3,12 +3,6 @@ import { filter } from "lodash";
 const operators = {
   toLower: {
     call: params => String(params.$this).toLowerCase(),
-    paramSchema: {
-      type: "object",
-      properties: {
-        $this: { type: "string" }
-      }
-    },
     allowed: ["string"],
     output: { type: "string" }
   },
@@ -25,7 +19,7 @@ const operators = {
     paramSchema: {
       type: "object",
       properties: {
-        start: { type: "boolean" },
+        start: { type: "integer" },
         end: { type: "integer" }
       },
       required: ["start", "end"]

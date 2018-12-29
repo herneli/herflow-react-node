@@ -10,16 +10,20 @@ const user = {
     { city: "Barcelona", postalCode: "08080" }
   ]
 };
+
 const options = {
   condition: {
     any: [
+      // {
+      //   $exp: [
+      //     "addresses",
+      //     { op: "filter", params: { field: "city", value: "Barcelona" } },
+      //     "0.postalCode",
+      //     { op: "eq", value: "08221" }
+      //   ]
+      // }
       {
-        $exp: [
-          "addresses",
-          { op: "filter", params: { field: "city", value: "Barcelona" } },
-          "0.postalCode",
-          { op: "eq", value: "08080" }
-        ]
+        $exp: ["addresses.0.city", { op: "eq", value: { $exp: "mainCity" } }]
       }
     ]
   }

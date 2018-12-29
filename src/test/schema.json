@@ -5,8 +5,7 @@
   "properties": {
     "title": {
       "type": "string",
-      "title": "Title 2",
-      "default": "A new task"
+      "title": "Title 2"
     },
     "createdAt": {
       "type": "string",
@@ -17,6 +16,7 @@
       "title": "Done?",
       "default": false
     },
+    "defaultAddress": { "$ref": "#/definitions/address" },
     "addresses": {
       "title": "Adresses",
       "type": "array",
