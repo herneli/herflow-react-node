@@ -8,7 +8,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogActions from "@material-ui/core/DialogActions";
 import T from "i18n-react";
 
-class Expression extends Component {
+class RuleEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,6 +16,7 @@ class Expression extends Component {
       rule: this.props.rule
     };
   }
+
   handleOnChange = value => {
     this.setState({ rule: value });
   };
@@ -49,7 +50,6 @@ class Expression extends Component {
               operators={this.props.operators}
               contextName={this.props.contextName}
               onChange={this.handleOnChange}
-              operators={this.props.operators}
             />
           </DialogContent>
           <DialogActions>
@@ -66,10 +66,10 @@ class Expression extends Component {
   }
 }
 
-Expression.propTypes = {
+RuleEditor.propTypes = {
   conditions: PropTypes.object,
   schema: PropTypes.object.isRequired,
   operators: PropTypes.object
 };
 
-export default Expression;
+export default RuleEditor;

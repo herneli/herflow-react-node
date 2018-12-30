@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import operators from "../ruleit/operators";
 import schema from "./schema.json";
 import refParser from "json-schema-ref-parser";
-import FactSelector from "../ruleit-forms/FactSelector";
+import FactSelector from "../ruleit-forms/expressions/FactSelector";
 
 let exp = [];
 

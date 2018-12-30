@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import tokenSourceType from "../ruleit/tokenSourceType";
+import tokenSourceType from "ruleit/tokenSourceType";
 import Chip from "@material-ui/core/Chip";
 import Avatar from "@material-ui/core/Avatar";
 import IconOperator from "mdi-material-ui/FunctionVariant";
@@ -9,8 +9,8 @@ import IconRoot from "mdi-material-ui/CubeOutline";
 import IconIndex from "mdi-material-ui/CodeBrackets";
 import { withStyles } from "@material-ui/core/styles";
 import FactSchemaMenu from "./FactSchemaMenu";
-import getSchemaIcon from "./getSchemaIcon";
-import OperatorEditor from "./editors/OperatorEditor";
+import getSchemaIcon from "../../getSchemaIcon";
+import OperatorEditor from "./OperatorEditor";
 
 Boolean();
 const styles = theme => ({

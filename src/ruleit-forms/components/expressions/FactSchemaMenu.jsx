@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { filterOperatorsByType } from "../ruleit/operators";
+import { filterOperatorsByType } from "ruleit/operators";
 import IconOperator from "mdi-material-ui/FunctionVariant";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import getSchemaIcon from "./getSchemaIcon";
+import getSchemaIcon from "../../getSchemaIcon";
 import PropTypes from "prop-types";
 
 class FactSchemaMenu extends Component {

@@ -78,7 +78,7 @@ const operators = {
     paramSchema: {
       type: "object",
       properties: {
-        array: { type: "array" }
+        array: { type: "array", items: { type: "string" } }
       }
     },
     output: { type: "boolean" }
@@ -157,7 +157,14 @@ const operators = {
   },
   sum: {
     call: params => params.value1 + params.value2,
-    output: "number"
+    paramSchema: $this => ({
+      type: "object",
+      properties: {
+        value1: { type: "number" },
+        value2: { type: "number" }
+      }
+    }),
+    output: { type: "number" }
   },
   log: {
     call: params => {

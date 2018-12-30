@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import getExpressionTokens, {
   getExpressionArray
-} from "../ruleit/getExpressionTokens";
+} from "ruleit/getExpressionTokens";
 import refParser from "json-schema-ref-parser";
 import FactPart from "./FactPart";
 import { withStyles } from "@material-ui/core/styles";

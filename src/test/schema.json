@@ -5,18 +5,27 @@
   "properties": {
     "title": {
       "type": "string",
-      "title": "Title 2"
+      "title": "Title 2",
+      "minLength": 10
     },
     "createdAt": {
       "type": "string",
       "format": "date"
     },
+    "totalAmount": {
+      "type": "number"
+    },
     "done": {
       "type": "boolean",
-      "title": "Done?",
-      "default": false
+      "title": "Done?"
     },
-    "defaultAddress": { "$ref": "#/definitions/address" },
+    "listOfStrings": {
+      "type": "array",
+      "title": "A list of strings",
+      "items": {
+        "type": "string"
+      }
+    },
     "addresses": {
       "title": "Adresses",
       "type": "array",

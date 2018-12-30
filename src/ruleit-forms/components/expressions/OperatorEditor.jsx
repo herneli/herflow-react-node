@@ -8,7 +8,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import IconOperator from "mdi-material-ui/FunctionVariant";
 import { withStyles } from "@material-ui/core";
 import { isFunction } from "lodash";
-import Form from "react-jsonschema-form";
+import Form from "../Form";
 
 const styles = theme => ({
   iconType: {

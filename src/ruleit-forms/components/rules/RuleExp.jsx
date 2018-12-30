@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Button from "@material-ui/core/Button";
 import IconDelete from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
-import FactSelector from "./FactSelector";
+import FactSelector from "../expressions/FactSelector";
 
 let styles = {
   rule: {
