@@ -1,3 +1,4 @@
+/// Code copied from 'react-jsonschema-form' project
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
