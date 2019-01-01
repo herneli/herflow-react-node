@@ -5,15 +5,19 @@
   "properties": {
     "title": {
       "type": "string",
-      "title": "Title 2",
+      "title": "todo.title",
       "minLength": 10
     },
     "createdAt": {
       "type": "string",
-      "format": "date"
+      "format": "date",
+      "title": "todo.createdAt"
     },
     "totalAmount": {
       "type": "number"
+    },
+    "color": {
+      "$ref": "#/definitions/color"
     },
     "done": {
       "type": "boolean",
@@ -41,6 +45,17 @@
         "street": { "type": "string" },
         "city": { "type": "string" }
       }
+    },
+    "color": {
+      "title": "Color",
+      "type": "number",
+      "anyOf": [
+        {
+          "type": "number",
+          "enum": [1],
+          "title": "1"
+        }
+      ]
     }
   }
 }

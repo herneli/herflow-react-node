@@ -9,6 +9,7 @@ function BaseInput(props) {
     throw new Error(`no id for props ${JSON.stringify(props)}`);
   }
   const {
+    label,
     value,
     readonly,
     disabled,
@@ -28,6 +29,10 @@ function BaseInput(props) {
     return props.onChange(value === "" ? options.emptyValue : value);
   };
 
+  let style = {};
+  if (!label) {
+    style.padding = "6px 12px 7px";
+  }
   return (
     <Input
       id="component-error"
@@ -39,6 +44,7 @@ function BaseInput(props) {
       onChange={_onChange}
       onBlur={onBlur && (event => onBlur(inputProps.id, event.target.value))}
       onFocus={onFocus && (event => onFocus(inputProps.id, event.target.value))}
+      inputProps={{ style }}
     />
   );
 }

@@ -89,14 +89,15 @@ export default class Form extends Component {
   }
 
   validate(formData, schema = this.props.schema) {
-    const { validate, transformErrors } = this.props;
+    const { validate, transformErrors, language } = this.props;
     const { definitions } = this.getRegistry();
     const resolvedSchema = retrieveSchema(schema, definitions, formData);
     return validateFormData(
       formData,
       resolvedSchema,
       validate,
-      transformErrors
+      transformErrors,
+      language
     );
   }
 
@@ -296,6 +297,7 @@ if (process.env.NODE_ENV !== "production") {
     validate: PropTypes.func,
     transformErrors: PropTypes.func,
     safeRenderCompletion: PropTypes.bool,
-    formContext: PropTypes.object
+    formContext: PropTypes.object,
+    language: PropTypes.string
   };
 }

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
+import T from "i18n-react";
 
 import {
   isMultiSelect,
@@ -109,11 +110,11 @@ function DefaultTemplate(props) {
       error={props.rawErrors && props.rawErrors.length > 0}
       required={label && required}
       variant="filled"
-      style={{ marginBottom: 10 }}
+      style={{ marginBottom: label ? 10 : 0 }}
     >
-      {displayLabel && (
+      {displayLabel && label && (
         <InputLabel shrink id={id}>
-          {label}
+          {T.translate(label)}
         </InputLabel>
       )}
       {children}

@@ -15,6 +15,7 @@ export default class TestForm extends Component {
             onChange={value => {
               console.log(value);
             }}
+            language="es"
           />
         </Paper>
       </div>

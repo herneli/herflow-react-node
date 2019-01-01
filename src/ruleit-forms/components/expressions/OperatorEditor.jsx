@@ -9,6 +9,8 @@ import IconOperator from "mdi-material-ui/FunctionVariant";
 import { withStyles } from "@material-ui/core";
 import { isFunction } from "lodash";
 import Form from "../Form";
+import { isObject } from "../../utils";
+import ParamExpressionField from "../fields/ParamExpressionField";
 
 const styles = theme => ({
   iconType: {
@@ -20,7 +22,10 @@ class OperatorEditor extends Component {
   constructor(props) {
     super(props);
     let params = this.props.exp && this.props.exp.params;
-    this.state = { params: params || {}, schema: this.getParamSchema() };
+    this.state = {
+      params: params,
+      schema: this.getParamSchema()
+    };
     this.formRef = null;
   }
 
@@ -29,6 +34,30 @@ class OperatorEditor extends Component {
       this.props.onOperatorAdded({ op: this.props.exp.op });
     }
   };
+
+  toExpressionSchema(schema) {
+    let uiSchema = {};
+    if (schema.type === "object" && isObject(schema.properties)) {
+      let expSchema = { type: "object", properties: {} };
+      Object.keys(schema.properties).forEach(paramKey => {
+        expSchema.properties[paramKey] = {
+          oneOf: [
+            schema.properties[paramKey],
+            {
+              type: "object",
+              properties: {
+                $exp: {}
+              }
+            }
+          ]
+        };
+        uiSchema[paramKey] = { "ui:field": "paramExpression" };
+      });
+      return { schema: expSchema, uiSchema: uiSchema };
+    } else {
+      return { schema: schema, uiSchema: uiSchema };
+    }
+  }
 
   getParamSchema = () => {
     let operator = this.props.operators[this.props.exp.op];
@@ -49,20 +78,40 @@ class OperatorEditor extends Component {
     });
   };
 
+  expressionField = (schema, operators) => props => {
+    return (
+      <ParamExpressionField
+        factSelectorSchema={schema}
+        factSelectorOperators={operators}
+        {...props}
+      />
+    );
+  };
+
   render() {
     if (!this.state.schema) {
       return null;
     }
+    let { schema, uiSchema } = this.toExpressionSchema(this.state.schema);
+    console.log(schema);
     return (
-      <Dialog onClose={this.handleClose} open={true} fullWidth={true}>
+      <Dialog onClose={this.handleClose} open={true} fullWidth maxWidth="lg">
         <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>
           <IconOperator /> {this.props.exp.op}
         </DialogTitle>
         <DialogContent>
           <Form
-            schema={this.state.schema}
+            schema={schema}
+            uiSchema={uiSchema}
             formData={this.state.params}
             onSubmit={this.handleOnSubmit}
+            noHtml5Validate={true}
+            fields={{
+              paramExpression: this.expressionField(
+                this.props.schema,
+                this.props.operators
+              )
+            }}
             ref={form => {
               this.formRef = form;
             }}

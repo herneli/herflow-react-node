@@ -10,7 +10,7 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.common.white,
-    padding: "10px 0px 12px 5px",
+    padding: "4px 0px 6px 5px",
     borderRadius: "5px",
     border: "1px solid",
     borderColor: theme.palette.primary.light,
@@ -43,7 +43,7 @@ class FactSelector extends Component {
     if (this.state.schema) {
       let expTokens = getExpressionTokens(this.state.schema, this.props.exp, {
         operators: this.props.operators,
-        rootName: this.props.name
+        rootName: this.props.schema.title || "root"
       });
       if (expTokens) {
         let expComponents = expTokens.map((expToken, index) => {
@@ -54,6 +54,7 @@ class FactSelector extends Component {
               withMenu={index === expTokens.length - 1}
               onAddExp={this.handleOnAddExp}
               operators={this.props.operators}
+              schema={this.state.schema}
             />
           );
         });

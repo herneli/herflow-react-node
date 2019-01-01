@@ -114,6 +114,7 @@ class FactPart extends Component {
             thisSchema={this.props.token.schema}
             onOperatorAdded={this.handleOnOperatorAdded}
             onEditorClose={this.handleOnEditorClose}
+            schema={this.props.schema}
           />
         ) : null}
       </React.Fragment>

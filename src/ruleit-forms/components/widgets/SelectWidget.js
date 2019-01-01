@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
+import FilledInput from "@material-ui/core/FilledInput";
 
 import { asNumber, guessType } from "../../utils";
 
@@ -65,8 +68,9 @@ function SelectWidget(props) {
   const { enumOptions, enumDisabled } = options;
   const emptyValue = multiple ? [] : "";
   return (
-    <select
+    <Select
       id={id}
+      variant="filled"
       multiple={multiple}
       className="form-control"
       value={typeof value === "undefined" ? emptyValue : value}
@@ -91,17 +95,20 @@ function SelectWidget(props) {
         const newValue = getValue(event, multiple);
         onChange(processValue(schema, newValue));
       }}
+      input={<FilledInput />}
     >
-      {!multiple && !schema.default && <option value="">{placeholder}</option>}
+      {!multiple && !schema.default && (
+        <MenuItem value="">{placeholder}</MenuItem>
+      )}
       {enumOptions.map(({ value, label }, i) => {
         const disabled = enumDisabled && enumDisabled.indexOf(value) !== -1;
         return (
-          <option key={i} value={value} disabled={disabled}>
+          <MenuItem key={i} value={value} disabled={disabled}>
             {label}
-          </option>
+          </MenuItem>
         );
       })}
-    </select>
+    </Select>
   );
 }
 

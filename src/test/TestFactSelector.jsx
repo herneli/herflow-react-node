@@ -29,7 +29,6 @@ export default class TestFactSelector extends Component {
           schema={this.state.schema}
           exp={this.state.exp}
           operators={operators}
-          name="User"
           onChange={this.handleOnChange("exp")}
         />
       );

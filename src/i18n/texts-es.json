@@ -36,5 +36,9 @@
   },
   "forms": {
     "ruleEditor": "Rule editor"
+  },
+  "todo": {
+    "title": "Título",
+    "createdAt": "Creado el"
   }
 }
