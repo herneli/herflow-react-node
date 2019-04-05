@@ -11,7 +11,6 @@ export default class TestForm extends Component {
           <Form
             schema={schema}
             noHtml5Validate={true}
-            formData={{ title: "Hello", addresses: [] }}
             onChange={value => {
               console.log(value);
             }}

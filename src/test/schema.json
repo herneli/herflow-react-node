@@ -1,37 +1,23 @@
 {
-  "title": "Todo",
+  "$id": "https://example.com/person.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Person",
   "type": "object",
-  "required": ["title"],
   "properties": {
-    "title": {
+    "firstName": {
       "type": "string",
-      "title": "todo.title",
-      "minLength": 10
+      "description": "The person's first name."
     },
-    "createdAt": {
+    "lastName": {
       "type": "string",
-      "format": "date",
-      "title": "todo.createdAt"
+      "description": "The person's last name."
     },
-    "totalAmount": {
-      "type": "number"
-    },
-    "color": {
-      "$ref": "#/definitions/color"
-    },
-    "done": {
-      "type": "boolean",
-      "title": "Done?"
-    },
-    "listOfStrings": {
-      "type": "array",
-      "title": "A list of strings",
-      "items": {
-        "type": "string"
-      }
+    "age": {
+      "description": "Age in years which must be equal to or greater than zero.",
+      "type": "integer",
+      "minimum": 0
     },
     "addresses": {
-      "title": "Adresses",
       "type": "array",
       "items": {
         "$ref": "#/definitions/address"
@@ -45,17 +31,6 @@
         "street": { "type": "string" },
         "city": { "type": "string" }
       }
-    },
-    "color": {
-      "title": "Color",
-      "type": "number",
-      "anyOf": [
-        {
-          "type": "number",
-          "enum": [1],
-          "title": "1"
-        }
-      ]
     }
   }
 }
