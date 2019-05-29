@@ -23,7 +23,7 @@ class RuleEditor extends Component {
 
   handleSave = () => {
     this.setState({ dialogOpen: false });
-    this.onSave && this.onSave(this.state.rule);
+    this.props.onSave && this.props.onSave(this.state.rule);
   };
 
   handleClose = () => {

@@ -25,14 +25,14 @@ export default class RuleEngine {
         reject(new Error(`Options: "condition" must be an object`));
       }
       // Condition all must be an array
-      if (condition.all) {
-        if (!isArray(condition.all)) {
+      if (condition.type === "group" && condition.combinator === "all") {
+        if (!isArray(condition.rules)) {
           reject(
             new Error(`Options: "condition.any" must be an array of conditions`)
           );
         }
 
-        let conditionPromises = condition.all.map(conditionItem => {
+        let conditionPromises = condition.rules.map(conditionItem => {
           let promise = this.checkCondition(context, conditionItem);
           return promise;
         });
@@ -47,13 +47,13 @@ export default class RuleEngine {
           .catch(reason => reject(reason));
 
         // Condition any must be an array
-      } else if (condition.any) {
-        if (!isArray(condition.any)) {
+      } else if (condition.type === "group" && condition.combinator === "any") {
+        if (!isArray(condition.rules)) {
           reject(
             new Error(`Options: "condition.any" must be an array of conditions`)
           );
         }
-        let conditionPromises = condition.any.map(conditionItem => {
+        let conditionPromises = condition.rules.map(conditionItem => {
           return this.checkCondition(context, conditionItem);
         });
         Promise.all(conditionPromises)
@@ -67,11 +67,11 @@ export default class RuleEngine {
           .catch(reason => reject(reason));
 
         // Condition is a "fact" rule
-      } else if (condition.$exp) {
+      } else if (condition.type === "exp") {
         // Condition type not valid
         let expValue = resolveExpression(
           context,
-          condition.$exp,
+          condition.exp,
           this.operators
         );
         if (!isBoolean(expValue)) {

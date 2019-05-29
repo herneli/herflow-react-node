@@ -50,7 +50,11 @@ const resolveExpressionOperator = (
       }
     }
     // Resolve params
-    let params = expression.params || {};
+    //let params = expression.params || {};
+    let params = {};
+    if (expression.params) {
+      params = { ...expression.params };
+    }
     if (!isObject(params)) {
       throw new Error(`Expression: "params" property must be an object`);
     }

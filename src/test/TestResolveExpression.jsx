@@ -5,6 +5,10 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import RuleEditor from "ruleit-forms/components/rules/RuleEditor";
+import schema from "./schema.json";
+import operators from "ruleit/operators";
+import Engine from "../ruleit/RuleEngine";
 
 let user = {
   firstName: "Jordi",
@@ -12,7 +16,7 @@ let user = {
   addresses: [{ city: "Terrassa" }, { city: "Barcelona" }]
 };
 
-let exp = ["addresses", { op: "toLower" }];
+let exp = ["addresses"];
 
 const styles = {
   root: {
@@ -31,7 +35,8 @@ class TestResolveExpression extends Component {
     super(props);
     this.state = {
       context: JSON.stringify(user, null, 2),
-      exp: JSON.stringify(exp, null, 2)
+      exp: JSON.stringify(exp, null, 2),
+      rule: { type: "group", combinator: "all", rules: [] }
     };
   }
   handleChange = name => event => {
@@ -39,7 +44,7 @@ class TestResolveExpression extends Component {
       [name]: event.target.value
     });
   };
-  handleValidate = () => {
+  handleValidateExpression = () => {
     let context = JSON.parse(this.state.context);
     let exp = JSON.parse(this.state.exp);
     try {
@@ -49,6 +54,28 @@ class TestResolveExpression extends Component {
       console.log(error.message);
       this.setState({ ...this.state, expressionResult: error.message });
     }
+  };
+
+  handleValidateRule = () => {
+    let engine = new Engine({ condition: this.state.rule });
+    let context = JSON.parse(this.state.context);
+    engine
+      .run(context)
+      .then(response => {
+        let expressionResult = { responseType: "Ok", response: response };
+        this.setState({ ...this.state, expressionResult });
+      })
+      .catch(reason => {
+        let expressionResult = {
+          responseType: "Error",
+          response: reason.message
+        };
+        this.setState({ ...this.state, expressionResult });
+      });
+  };
+
+  handleSaveRule = rule => {
+    this.setState({ ...this.state, rule: rule });
   };
 
   render() {
@@ -83,12 +110,30 @@ class TestResolveExpression extends Component {
             <Button
               variant="contained"
               className={classes.button}
-              onClick={this.handleValidate}
+              onClick={this.handleValidateExpression}
+            >
+              Validate
+            </Button>
+            <h2>Rule</h2>
+            <Paper className={classes.paper}>
+              <RuleEditor
+                schema={schema}
+                rule={this.state.rule}
+                contextName="User"
+                operators={operators}
+                onSave={this.handleSaveRule}
+              />
+            </Paper>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={this.handleValidateRule}
             >
               Validate
             </Button>
           </Grid>
         </Grid>
+
         <Grid container spacing={24}>
           <Grid item xs={4}>
             <Paper className={classes.paper}>

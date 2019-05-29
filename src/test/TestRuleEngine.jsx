@@ -2,28 +2,30 @@ import React, { Component } from "react";
 import Engine from "../ruleit/RuleEngine";
 
 const user = {
-  name: "Jordi",
-  createdAt: new Date("2018-02-01"),
-  mainCity: "Terrassa",
+  firstName: "Jordi",
+  lastName: "Hernandez",
   addresses: [
-    { city: "Terrassa", postalCode: "08221" },
-    { city: "Barcelona", postalCode: "08080" }
+    {
+      city: "Terrassa"
+    },
+    {
+      city: "Barcelona"
+    }
   ]
 };
 
 const options = {
   condition: {
-    any: [
-      // {
-      //   $exp: [
-      //     "addresses",
-      //     { op: "filter", params: { field: "city", value: "Barcelona" } },
-      //     "0.postalCode",
-      //     { op: "eq", value: "08221" }
-      //   ]
-      // }
+    type: "group",
+    combinator: "all",
+    rules: [
       {
-        $exp: ["addresses.0.city", { op: "eq", value: { $exp: "mainCity" } }]
+        type: "exp",
+        exp: ["firstName", { op: "eq", params: { value: "Jordi" } }]
+      },
+      {
+        type: "exp",
+        exp: ["lastName", { op: "eq", params: { value: "Hernandez" } }]
       }
     ]
   }
@@ -32,7 +34,7 @@ const options = {
 export default class TestRuleEgine extends Component {
   constructor(props) {
     super(props);
-    this.state = { responseType: null, respnse: null };
+    this.state = { responseType: null, response: null };
   }
   componentDidMount = () => {
     let engine = new Engine(options);
