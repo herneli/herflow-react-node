@@ -93,7 +93,6 @@ class OperatorEditor extends Component {
       return null;
     }
     let { schema, uiSchema } = this.toExpressionSchema(this.state.schema);
-    console.log(schema);
     return (
       <Dialog onClose={this.handleClose} open={true} fullWidth maxWidth="lg">
         <DialogTitle id="customized-dialog-title" onClose={this.handleClose}>

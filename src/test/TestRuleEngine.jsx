@@ -42,11 +42,9 @@ export default class TestRuleEgine extends Component {
       .run(user)
       .then(response => {
         this.setState({ responseType: "Ok", response: response });
-        console.log(response);
       })
       .catch(reason => {
         this.setState({ responseType: "Error", response: reason.message });
-        console.log(reason);
       });
   };
 

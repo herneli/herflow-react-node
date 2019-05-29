@@ -168,8 +168,15 @@ const operators = {
   },
   log: {
     call: params => {
+      console.log(params.message);
       return true;
     },
+    paramSchema: $this => ({
+      type: "object",
+      properties: {
+        message: { type: "string" }
+      }
+    }),
     output: { type: "boolean" }
   }
 };

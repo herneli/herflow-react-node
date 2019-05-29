@@ -12,7 +12,6 @@ export default class ParamExpressionField extends Component {
     let expSchema = { type: "object", properties: { $exp: {} } };
     let valueSchema = {};
     this.props.schema.oneOf.forEach(itemSchema => {
-      console.log("Item schema", itemSchema);
       if (
         itemSchema.type !== "object" ||
         !itemSchema.properties ||
@@ -76,8 +75,6 @@ export default class ParamExpressionField extends Component {
     }
   };
   render() {
-    console.log("ParamExpressionField Props:", this.props);
-
     return (
       <Grid container>
         <Grid item xs={3}>

@@ -51,7 +51,6 @@ class TestResolveExpression extends Component {
       let expressionResult = resolveExpression(context, exp);
       this.setState({ ...this.state, expressionResult });
     } catch (error) {
-      console.log(error.message);
       this.setState({ ...this.state, expressionResult: error.message });
     }
   };

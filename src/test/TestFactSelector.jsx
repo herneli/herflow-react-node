@@ -18,7 +18,6 @@ export default class TestFactSelector extends Component {
   };
 
   handleOnChange = name => value => {
-    console.log(name, value);
     this.setState({ ...this.state, [name]: value });
   };
 

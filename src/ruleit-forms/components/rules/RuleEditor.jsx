@@ -35,7 +35,7 @@ class RuleEditor extends Component {
   render() {
     return (
       <div>
-        <span>{JSON.stringify(this.state.rule)}</span>
+        {/* <span>{JSON.stringify(this.state.rule)}</span> */}
         <Button variant="contained" onClick={this.handleOnEdit}>
           Edit
         </Button>
