@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 // import TestRuleEngine from "./TestRuleEngine";
-// import TestResolveExpression from "./TestResolveExpression";
+import TestResolveExpression from "./TestResolveExpression";
 // import TestFactSelector from "./TestFactSelector";
 import TestRuleEditor from "./TestRuleEditor";
 // import TestForm from "./TestForm";
@@ -10,6 +10,7 @@ export default class Test extends Component {
     return (
       <React.Fragment>
         <TestRuleEditor />
+        <TestResolveExpression />
       </React.Fragment>
     );
   }

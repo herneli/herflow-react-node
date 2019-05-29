@@ -7,7 +7,8 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 
 let user = {
-  name: "Pedro",
+  firstName: "Jordi",
+  lastName: "Hernandez",
   addresses: [{ city: "Terrassa" }, { city: "Barcelona" }]
 };
 
@@ -69,7 +70,7 @@ class TestResolveExpression extends Component {
             </Paper>
           </Grid>
           <Grid item xs={4}>
-            <h2>Context</h2>
+            <h2>Expression</h2>
             <Paper className={classes.paper}>
               <InputBase
                 multiline={true}
